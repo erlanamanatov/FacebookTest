@@ -17,6 +17,7 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -91,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         final Button permsButton = (Button) findViewById(R.id.perms);
         permsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-//                Intent selectPermsIntent =
-//                        new Intent(FacebookLoginActivity.this, PermissionSelectActivity.class);
-//                startActivityForResult(selectPermsIntent, PICK_PERMS_REQUEST);
+                Intent selectPermsIntent =
+                        new Intent(MainActivity.this, PermissionSelectActivity.class);
+                startActivityForResult(selectPermsIntent, PICK_PERMS_REQUEST);
             }
         });
 
@@ -167,41 +168,41 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_PERMS_REQUEST) {
             if(resultCode == RESULT_OK) {
-//                String[] readPermsArr = data
-//                        .getStringArrayExtra(PermissionSelectActivity.EXTRA_SELECTED_READ_PARAMS);
-//                String writePrivacy = data
-//                        .getStringExtra(PermissionSelectActivity.EXTRA_SELECTED_WRITE_PRIVACY);
-//                String[] publishPermsArr = data
-//                        .getStringArrayExtra(
-//                                PermissionSelectActivity.EXTRA_SELECTED_PUBLISH_PARAMS);
-//
-//                fbLoginButton.clearPermissions();
-//
-//                if (readPermsArr != null) {
-//                    if(readPermsArr.length > 0) {
-//                        fbLoginButton.setReadPermissions(readPermsArr);
-//                    }
-//                }
-//
-//                if ((readPermsArr == null ||
-//                        readPermsArr.length == 0) &&
-//                        publishPermsArr != null) {
-//                    if(publishPermsArr.length > 0) {
-//                        fbLoginButton.setPublishPermissions(publishPermsArr);
-//                    }
-//                }
-//                // Set write privacy for the user
-//                if ((writePrivacy != null)) {
-//                    DefaultAudience audience;
-//                    if (DefaultAudience.EVERYONE.toString().equals(writePrivacy)) {
-//                        audience = DefaultAudience.EVERYONE;
-//                    } else if (DefaultAudience.FRIENDS.toString().equals(writePrivacy)) {
-//                        audience = DefaultAudience.FRIENDS;
-//                    } else {
-//                        audience = DefaultAudience.ONLY_ME;
-//                    }
-//                    fbLoginButton.setDefaultAudience(audience);
-//                }
+                String[] readPermsArr = data
+                        .getStringArrayExtra(PermissionSelectActivity.EXTRA_SELECTED_READ_PARAMS);
+                String writePrivacy = data
+                        .getStringExtra(PermissionSelectActivity.EXTRA_SELECTED_WRITE_PRIVACY);
+                String[] publishPermsArr = data
+                        .getStringArrayExtra(
+                                PermissionSelectActivity.EXTRA_SELECTED_PUBLISH_PARAMS);
+
+                fbLoginButton.clearPermissions();
+
+                if (readPermsArr != null) {
+                    if(readPermsArr.length > 0) {
+                        fbLoginButton.setReadPermissions(readPermsArr);
+                    }
+                }
+
+                if ((readPermsArr == null ||
+                        readPermsArr.length == 0) &&
+                        publishPermsArr != null) {
+                    if(publishPermsArr.length > 0) {
+                        fbLoginButton.setPublishPermissions(publishPermsArr);
+                    }
+                }
+                // Set write privacy for the user
+                if ((writePrivacy != null)) {
+                    DefaultAudience audience;
+                    if (DefaultAudience.EVERYONE.toString().equals(writePrivacy)) {
+                        audience = DefaultAudience.EVERYONE;
+                    } else if (DefaultAudience.FRIENDS.toString().equals(writePrivacy)) {
+                        audience = DefaultAudience.FRIENDS;
+                    } else {
+                        audience = DefaultAudience.ONLY_ME;
+                    }
+                    fbLoginButton.setDefaultAudience(audience);
+                }
             }
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
