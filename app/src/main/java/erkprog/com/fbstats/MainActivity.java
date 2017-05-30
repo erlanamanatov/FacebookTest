@@ -3,6 +3,7 @@ package erkprog.com.fbstats;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,12 +24,15 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String GRAPH_PATH = "me/permissions";
     private static final String SUCCESS = "success";
+    private static final String TAG = "myLog";
 
     private static final int PICK_PERMS_REQUEST = 0;
 
@@ -37,17 +41,52 @@ public class MainActivity extends AppCompatActivity {
     private ProfilePictureView profilePictureView;
     private TextView userNameView;
     private LoginButton fbLoginButton;
+    private Button button;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "created");
 
         callbackManager = CallbackManager.Factory.create();
 
         fbLoginButton = (LoginButton) findViewById(R.id._fb_login);
         profilePictureView = (ProfilePictureView) findViewById(R.id.user_pic);
         profilePictureView.setCropped(true);
+        button = (Button) findViewById(R.id.button_check);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "41383354638/insights/page_fans_country/lifetime",
+                        null,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                                Log.d(TAG, "oncompleted");
+                                try{
+                                    JSONObject jsonObject = response.getJSONObject();
+                                    Log.d(TAG, jsonObject.toString());
+                                    JSONArray array  = jsonObject.getJSONArray("data");
+
+                                    //Log.d("json", json);
+                                    //Log.d("json", "Имя " + name);
+                                    //userNameView.setText(name);
+
+                                } catch (JSONException e){
+                                    Log.d(TAG, "error JSON");
+                                }
+
+            /* handle the result */
+                            }
+                        }
+                ).executeAsync();
+            }
+        });
 
         userNameView = (TextView) findViewById(R.id.user_name);
 
