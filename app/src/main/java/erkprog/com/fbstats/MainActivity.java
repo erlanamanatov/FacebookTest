@@ -1,8 +1,10 @@
 package erkprog.com.fbstats;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +26,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView userNameView;
     private LoginButton fbLoginButton;
     private Button button;
+    private TextView textViewInfo;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -53,16 +54,37 @@ public class MainActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         fbLoginButton = (LoginButton) findViewById(R.id._fb_login);
+
+
+//        List<String> readPermissions = new ArrayList<>();
+//        readPermissions.add("read_insights");
+//        //readPermissions.add("manage_pages");
+//
+//        List<String> publishPersmissions = new ArrayList<>();
+//        publishPersmissions.add("publish_pages");
+//        publishPersmissions.add("manage_pages");
+//
+//        fbLoginButton.setReadPermissions(readPermissions);
+//        fbLoginButton.setPublishPermissions(publishPersmissions);
+
+
         profilePictureView = (ProfilePictureView) findViewById(R.id.user_pic);
         profilePictureView.setCropped(true);
         button = (Button) findViewById(R.id.button_check);
+        textViewInfo = (TextView) findViewById(R.id.textViewInfo);
+        textViewInfo.setBackgroundColor(Color.LTGRAY);
+        textViewInfo.setMovementMethod(new ScrollingMovementMethod());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 new GraphRequest(
                         AccessToken.getCurrentAccessToken(),
-                        "41383354638/insights/page_fans_country/lifetime",
+                        //"41383354638/insights/page_fans_country/lifetime",
+                        //"41383354638/insights/page_actions_post_reactions_like_total/day",
+                        "41383354638/insights/page_cta_clicks_logged_in_total",
+                        //"41383354638/insights/page_fans_country",
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
@@ -72,19 +94,16 @@ public class MainActivity extends AppCompatActivity {
                                     JSONObject jsonObject = response.getJSONObject();
                                     Log.d(TAG, jsonObject.toString());
                                     JSONArray array  = jsonObject.getJSONArray("data");
-
-                                    //Log.d("json", json);
-                                    //Log.d("json", "Имя " + name);
-                                    //userNameView.setText(name);
-
+                                    Log.d(TAG, array.toString());
+                                    textViewInfo.setText(array.toString());
                                 } catch (JSONException e){
                                     Log.d(TAG, "error JSON");
                                 }
-
-            /* handle the result */
                             }
                         }
                 ).executeAsync();
+                */
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
             }
         });
 
@@ -188,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI() {
         Profile profile = Profile.getCurrentProfile();
+
         if (profile != null) {
             profilePictureView.setProfileId(profile.getId());
             userNameView

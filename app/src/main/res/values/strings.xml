@@ -37,6 +37,8 @@
         <item>read_mailbox</item>
         <item>read_stream</item>
         <item>read_audience_network_insights</item>
+        <item>manage_pages</item>
+
 
         // Privacy
         <item>ONLY_ME</item>
