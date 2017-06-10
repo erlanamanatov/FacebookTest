@@ -38,6 +38,11 @@ public class PostAdapter extends BaseAdapter {
         return 0;
     }
 
+    public String getPostId(int position){
+        Post post = (Post) getItem(position);
+        return post.getId();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

@@ -15,6 +15,14 @@ public class Post {
 
     }
 
+    public Post(String name, String message, int sharesCount, String id, String url) {
+        this.name = name;
+        this.message = message;
+        this.sharesCount = sharesCount;
+        this.id = id;
+        this.url = url;
+    }
+
     public String getName() {
         return name;
     }
