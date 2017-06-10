@@ -6,6 +6,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +24,23 @@ public class Main2Activity extends AppCompatActivity {
     private TextView info;
     private Button button;
     private static final String TAG = "myLogz";
+    private ArrayList<Post> postList;
+    private ListView postsListview;
+    private PostAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.page_posts);
+
+        postsListview = (ListView) findViewById(R.id.listview);
+        postList = new ArrayList<>();
+        adapter = new PostAdapter(this, postList);
+        postsListview.setAdapter(adapter);
         Log.d(TAG, "onCreated");
-        setContentView(R.layout.activity_main2);
+
+
         info = (TextView) findViewById(R.id.textView);
         info.setMovementMethod(new ScrollingMovementMethod());
         button = (Button) findViewById(R.id.button2);
@@ -127,6 +139,15 @@ public class Main2Activity extends AppCompatActivity {
                                         + "message: " + message + "\n"
                                         + "shares count: " + shares + "\n"
                                         + "_______________________________________");
+                                    Post postt = new Post();
+                                    postt.setId(id);
+                                    postt.setMessage(message);
+                                    postt.setName(name);
+                                    postt.setSharesCount(Integer.parseInt(shares));
+                                    postt.setUrl(url);
+                                    postList.add(postt);
+                                    adapter.notifyDataSetChanged();
+
                                     posts.add(id);
                                 }
                                 for (String id:posts){

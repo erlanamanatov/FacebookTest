@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,14 @@ public class PostAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //convertView = inflater.inflate(R.layout.group_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.post, parent, false);
         }
+        TextView postName = (TextView) convertView.findViewById(R.id.post_name);
+        TextView postMessage = (TextView) convertView.findViewById(R.id.post_message);
+
+        Post post = postsList.get(position);
+        postName.setText(post.getName());
+        postMessage.setText(post.getMessage());
 
         return convertView;
     }
