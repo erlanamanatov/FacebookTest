@@ -18,6 +18,7 @@
 
     <TextView
         android:id="@+id/post_shares"
+        android:textColor="#070719"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="shares: " />
@@ -29,6 +30,7 @@
 
         <TextView
             android:id="@+id/post_reached_total"
+            android:textColor="#070719"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +38,7 @@
 
         <TextView
             android:id="@+id/post_reached_unique"
+            android:textColor="#070719"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
