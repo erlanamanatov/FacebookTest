@@ -101,16 +101,26 @@ public class Main2Activity extends AppCompatActivity {
                                     try {
                                         url = post.getString("link");
                                     } catch (JSONException e) {
-
+                                        Log.d(TAG, "JSON exception url error");
                                     }
                                     String name = "";
                                     try {
                                         name = post.getString("name");
                                     } catch (JSONException e) {
-
+                                        Log.d(TAG, "JSON exception name error");
                                     }
-                                    String message = post.getString("message");
-                                    String shares = post.getJSONObject("shares").getString("count");
+                                    String message = "";
+                                    try {
+                                        message = post.getString("message");
+                                    } catch (JSONException e){
+                                        Log.d(TAG, "JSON exception message error");
+                                    }
+                                    String shares = "0";
+                                    try {
+                                        shares = post.getJSONObject("shares").getString("count");
+                                    } catch (JSONException e){
+                                        Log.d(TAG, "JSON exception shares error");
+                                    }
                                     Log.d(TAG, "post id: " + id + "\n"
                                             + "url: " + url + "\n"
                                             + "name: " + name + "\n"
@@ -120,20 +130,19 @@ public class Main2Activity extends AppCompatActivity {
                                     Post postt = new Post(name, message, Integer.parseInt(shares), id, url);
                                     postList.add(postt);
                                     adapter.notifyDataSetChanged();
-
-                                    //getPostInsights(id);
-
                                     posts.add(id);
                                 }
                                 for (String id : posts) {
                                     getPostInsights(id);
-                                    //info.append(id + "\n");
                                 }
                             } else {
                                 Log.d(TAG, "data array is empty");
                             }
                         } catch (JSONException e) {
-                            Log.d(TAG, "error JSON");
+                            Toast.makeText(Main2Activity.this, "JSON exception while getting posts", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "JSON exception while getting posts");
+                        } catch (Exception e){
+                            Toast.makeText(Main2Activity.this, "Getting posts error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -200,7 +209,7 @@ public class Main2Activity extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
-
+                            Log.d(TAG, "post parsing json error");
                         }
                     }
                 });
